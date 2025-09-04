@@ -10,5 +10,6 @@ module.exports = {
   JWT_SECRET: process.env.JWT_SECRET,
   MONGO_URI: process.env.MONGO_URI,
   NODE_ENV: process.env.NODE_ENV,
+  JWT_TOKEN_EXPIRES_IN: process.env.JWT_TOKEN_EXPIRES_IN || '7d',
   INITIAL_CHIPS_AMOUNT: 100000,
   }

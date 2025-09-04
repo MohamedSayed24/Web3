@@ -213,7 +213,7 @@ class Table {
   sitOutFeltedPlayers() {
     for (let i of Object.keys(this.seats)) {
       const seat = this.seats[i];
-      if ((seat && seat.stack == 0) || (seat && seat.stack < 0)) {
+      if ((seat && seat.stack === 0) || (seat && seat.stack < 0)) {
         seat.sittingOut = true;
       }
     }

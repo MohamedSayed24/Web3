@@ -31,7 +31,11 @@ const server = app.listen(config.PORT, () => {
 });
 
 //  Handle real-time poker game logic with socket.io
-const io = socketio(server);
+const io = socketio(server, {
+    cors: {
+        origin: '*',
+    },
+});
 
 io.on("connect", (socket) => gameSocket.init(socket, io));
 

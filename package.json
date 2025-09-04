@@ -55,8 +55,9 @@
     
 "scripts": {
     "start": "concurrently \"node server/server.js\" \"npm run client\"",
-    "client": "react-scripts --openssl-legacy-provider start"
-   
+    "client": "react-scripts --openssl-legacy-provider start",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
+    "start:prod": "NODE_ENV=production node server/server.js"
 },
     "eslintConfig": {
         "extends": "react-app"
